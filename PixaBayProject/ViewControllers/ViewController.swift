@@ -114,6 +114,7 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate {
         
         let currentHit = filteredPictureData[indexPath.item]
         
+        cell.cellLabelAnimation()
         cell.setUpCell(hit: currentHit)
         return cell
     }

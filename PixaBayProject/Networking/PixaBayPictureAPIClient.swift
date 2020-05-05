@@ -9,8 +9,8 @@ class PictureAPIClient {
   
     func getPicturesFromAPI(searchTerm:String,completionHandler:@escaping(Result<[Hit],AppError>)-> Void ) {
         
-        let urlString = "https://pixabay.com/api/?q=\(searchTerm.replacingOccurrences(of: " ", with: "_"))&key=\(Secrets.pixaBayKey.lowercased())&page=1&per_page=5"
-               
+        let urlString = "https://pixabay.com/api/?q=\(searchTerm.replacingOccurrences(of: " ", with: "_"))&key=\(Secrets.pixaBayKey.lowercased())&page=1&per_page=15"
+            
                guard let url  = URL(string: urlString) else {
                    completionHandler(.failure(.badURL))
                    return

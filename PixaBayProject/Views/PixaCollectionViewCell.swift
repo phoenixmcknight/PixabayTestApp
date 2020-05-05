@@ -17,6 +17,20 @@ class PixaCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var userName: UILabel!
     
+    
+    public func cellLabelAnimation() {
+        UIView.transition(with: userName, duration: 1.5, options: [.autoreverse,.repeat], animations: {
+            let alpha = self.userName.alpha > 0.3 ? 0.3 : 1
+            self.userName.alpha = CGFloat(alpha)
+        }, completion: nil)
+        
+    }
+    
+    private func cancelCellAnimation() {
+        userName.layer.removeAllAnimations()
+        userName.alpha = 1
+    }
+    
     public func setUpCell(hit:Hit) {
         
         pixaActivityIndc.startAnimating()
@@ -26,6 +40,7 @@ class PixaCollectionViewCell: UICollectionViewCell {
             pixaImageView.image = UIImage(systemName: "photo.fill")
             
             userName.text = "Unable To Load Image"
+            userName.layer.removeAllAnimations()
             return
         }
         
@@ -34,6 +49,8 @@ class PixaCollectionViewCell: UICollectionViewCell {
             pixaImageView.image = image
             
             self.userName.text = hit.user ?? "Username Unavailable"
+           cancelCellAnimation()
+            
             pixaActivityIndc.stopAnimating()
         } else {
             
@@ -44,12 +61,15 @@ class PixaCollectionViewCell: UICollectionViewCell {
                     case .failure:
                         self?.pixaImageView.image = UIImage(systemName: "photo.fill")
                         self?.userName.text = "Unable To Load Image"
+                        self?.cancelCellAnimation()
                         self?.pixaActivityIndc.stopAnimating()
                     case .success(let image):
                         
                         self?.pixaImageView.image = image
                         
                         self?.userName.text = hit.user ?? "Username Unavailable"
+                        self?.cancelCellAnimation()
+
                         self?.pixaActivityIndc.stopAnimating()
                     }
                 }

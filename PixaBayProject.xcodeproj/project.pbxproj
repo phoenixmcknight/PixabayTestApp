@@ -77,7 +77,6 @@
 		691A47BB2461AD8900AA6655 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				698CD88624606EA800E5CAEA /* Info.plist */,
 				698CD88124606EA800E5CAEA /* Assets.xcassets */,
 				698CD87824606EA500E5CAEA /* AppDelegate.swift */,
 				698CD87A24606EA500E5CAEA /* SceneDelegate.swift */,
@@ -152,6 +151,7 @@
 		698CD87724606EA500E5CAEA /* PixaBayProject */ = {
 			isa = PBXGroup;
 			children = (
+				698CD88624606EA800E5CAEA /* Info.plist */,
 				691A47C02461ADD700AA6655 /* Extensions */,
 				691A47BF2461AD9400AA6655 /* ViewControllers */,
 				691A47BE2461AD9100AA6655 /* Views */,
