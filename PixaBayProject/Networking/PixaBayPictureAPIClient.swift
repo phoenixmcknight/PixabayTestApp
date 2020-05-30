@@ -5,19 +5,33 @@ import UIKit
 
 class PictureAPIClient {
     static let manager = PictureAPIClient()
+    
+   private lazy var baseURL: URL = {
+      return URL(string: "https://pixabay.com")!
+    }()
+    
+//    let session: URLSession
+//
+//    init(session: URLSession = URLSession.shared) {
+//      self.session = session
+//
+//    }
+    
    
   
-    func getPicturesFromAPI(searchTerm:String,completionHandler:@escaping(Result<[Hit],AppError>)-> Void ) {
+    func getPicturesFromAPI(requestTwo:PixaRequest,searchTerm:String,currentPage:Int,completionHandler:@escaping(Result<[Hit],AppError>)-> Void ) {
         
-        let urlString = "https://pixabay.com/api/?q=\(searchTerm.replacingOccurrences(of: " ", with: "_"))&key=\(Secrets.pixaBayKey.lowercased())&page=1&per_page=15"
-            
-               guard let url  = URL(string: urlString) else {
-                   completionHandler(.failure(.badURL))
-                   return
-               }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+      
+        
+        let parameters = ["page":"\(currentPage)","q":searchTerm.replacingOccurrences(of: " ", with: "_")].merging(requestTwo.parameters, uniquingKeysWith: +)
+        
+      
+        var request = URLRequest(url: baseURL.appendingPathComponent(requestTwo.path)).encode(with: parameters)
+        
+        request.httpMethod = requestTwo.method.rawValue
+//        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+        
         let urlSession = URLSession(configuration: .default)
     
         urlSession.dataTask(with: request) { (data, response, error) in

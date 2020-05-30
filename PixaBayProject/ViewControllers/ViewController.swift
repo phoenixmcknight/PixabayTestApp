@@ -22,7 +22,11 @@ class ViewController: UIViewController {
     
     private var scrollDirection:ScrollDirection = .none
     
+    private var retrievingDataInProgress:Bool = false
     
+    private var currentPage:Int = 1
+    
+    private var request:PixaRequest = PixaRequest()
     
     
     var pictureData = [Hit]() {
@@ -39,6 +43,8 @@ class ViewController: UIViewController {
         }
     }
     
+    var searchTerm:String = ""
+    
     var isFiltering = false
     
     var filteredPictureData:[Hit] {
@@ -54,7 +60,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         addDelegatesAndDataSource()
         assignLayoutToCollectionView()
-        
+        TestModel.testNumber = 10
+    
         // Do any additional setup after loading the view.
     }
     
@@ -76,24 +83,59 @@ class ViewController: UIViewController {
         userNameFilterSearchBar.delegate = self
         pixaCollectionView.dataSource = self
         pixaCollectionView.delegate = self
-    }
+        pixaCollectionView.prefetchDataSource = self
+            }
     
     
     private func loadPixaData(search:String) {
+        guard  !retrievingDataInProgress else {return}
+     retrievingDataInProgress = true
         pixaActivityIndc.startAnimating()
-        PictureAPIClient.manager.getPicturesFromAPI(searchTerm: search) { [weak self] (result) in
+        PictureAPIClient.manager.getPicturesFromAPI(requestTwo: request, searchTerm: search,currentPage: currentPage) { [weak self] (result) in
             switch result {
             case .failure:
+                self?.retrievingDataInProgress = false
                 self?.showAlert(title: "Error", message: "Could Not Load Images For '\(search)'. Please Try Again Using a Different Search Term")
                 self?.pixaActivityIndc.stopAnimating()
             case .success(let hits):
+                
+             //   self?.pictureData.append(contentsOf: hits)
+                self?.pictureData.append(contentsOf: hits)
+                if self!.currentPage > 1 {
+                    
+                   
+                    guard let indexPathsToReload = self?.calculateIndexPathsToReload(from: hits) else {
+                        self?.pixaCollectionView.reloadData()
+                       // self?.currentPage += 1
+                        self?.retrievingDataInProgress = false
+                        self?.pixaActivityIndc.stopAnimating()
+                        return
+                    }
+                    let reloadIndexes = self?.visibleIndexPathsToReload(intersecting: indexPathsToReload)
+                    
+                    self?.pixaCollectionView.reloadItems(at: reloadIndexes!)
+                   
+
+
+                } else {
+                       self?.showFilterSearchBar()
+                    self?.pixaCollectionView.reloadData()
+                }
+//
+                self?.currentPage += 1
+                self?.retrievingDataInProgress = false
                 self?.pixaActivityIndc.stopAnimating()
-                self?.pictureData = hits
-                self?.showFilterSearchBar()
                 
             }
         }
     }
+    
+    private func calculateIndexPathsToReload(from pictures: [Hit]) -> [IndexPath] {
+        let startIndex = pictureData.count - pictures.count
+        let endIndex = startIndex + pictures.count
+      return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+    }
+    
     private func showFilterSearchBar() {
         guard self.userNameFilterSearchBar.alpha == 0 else {return}
         UIView.animate(withDuration: 0.5) { 
@@ -103,7 +145,24 @@ class ViewController: UIViewController {
 }
 
 
-extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate {
+extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDataSourcePrefetching {
+    
+   
+   
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+//        for index in indexPaths {
+//            if isLoadingCell(for: index) {
+//                loadPixaData(search: searchTerm)
+//            }
+//        }
+        if indexPaths.contains(where: isLoadingCell) {
+           loadPixaData(search: searchTerm)
+         }
+        print("prefetching",indexPaths)
+    
+    }
+   
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         filteredPictureData.count
@@ -144,6 +203,8 @@ extension ViewController:UICollectionViewDataSource,UICollectionViewDelegate {
                 cell.transform = .identity
         })
     }
+    
+
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.lastContentOffset = scrollView.contentOffset.y
@@ -221,10 +282,11 @@ extension ViewController:UISearchBarDelegate {
         guard searchBar.tag == 0 else {return}
         
         guard let search = pixaSearchBar.text else {return}
+        searchTerm = search
         scrollDirection = .none
         userNameFilterSearchBar.text = ""
         searchString = nil
-        loadPixaData(search: search)
+        loadPixaData(search: searchTerm)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -243,5 +305,15 @@ extension ViewController {
         case up
         case down
         case none
+    }
+    
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+      return indexPath.row >= pictureData.count - 1
+    }
+
+    func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = pixaCollectionView.indexPathsForVisibleItems
+      let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+      return Array(indexPathsIntersection)
     }
 }

@@ -15,6 +15,10 @@
 		691A47B62460772400AA6655 /* PixaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A47B52460772400AA6655 /* PixaCollectionViewCell.swift */; };
 		691A47B824607AC700AA6655 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A47B724607AC700AA6655 /* DetailViewController.swift */; };
 		691A47BA2460850500AA6655 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691A47B92460850500AA6655 /* Extension.swift */; };
+		6923DED9247331B50079EE73 /* testModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6923DED8247331B50079EE73 /* testModel.swift */; };
+		69318640246F5EE900C10A2C /* URLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6931863F246F5EE800C10A2C /* URLRequest.swift */; };
+		69318642246F5F1000C10A2C /* PixaBayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69318641246F5F1000C10A2C /* PixaBayModel.swift */; };
+		69318644246F8C8B00C10A2C /* PiixaRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69318643246F8C8B00C10A2C /* PiixaRequest.swift */; };
 		698CD87924606EA500E5CAEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698CD87824606EA500E5CAEA /* AppDelegate.swift */; };
 		698CD87B24606EA500E5CAEA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698CD87A24606EA500E5CAEA /* SceneDelegate.swift */; };
 		698CD87D24606EA500E5CAEA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698CD87C24606EA500E5CAEA /* ViewController.swift */; };
@@ -43,6 +47,10 @@
 		691A47B52460772400AA6655 /* PixaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaCollectionViewCell.swift; sourceTree = "<group>"; };
 		691A47B724607AC700AA6655 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		691A47B92460850500AA6655 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		6923DED8247331B50079EE73 /* testModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testModel.swift; sourceTree = "<group>"; };
+		6931863F246F5EE800C10A2C /* URLRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequest.swift; sourceTree = "<group>"; };
+		69318641246F5F1000C10A2C /* PixaBayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixaBayModel.swift; sourceTree = "<group>"; };
+		69318643246F8C8B00C10A2C /* PiixaRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PiixaRequest.swift; sourceTree = "<group>"; };
 		698CD87524606EA500E5CAEA /* PixaBayProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PixaBayProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		698CD87824606EA500E5CAEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		698CD87A24606EA500E5CAEA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +99,8 @@
 				691A47AE246075B800AA6655 /* ImageHelper.swift */,
 				691A47B3246076A900AA6655 /* Secrets.swift */,
 				691A47AB246075A700AA6655 /* PixaBayPictureAPIClient.swift */,
+				69318643246F8C8B00C10A2C /* PiixaRequest.swift */,
+				6931863F246F5EE800C10A2C /* URLRequest.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -99,6 +109,8 @@
 			isa = PBXGroup;
 			children = (
 				691A47A92460758B00AA6655 /* PixaModel.swift */,
+				69318641246F5F1000C10A2C /* PixaBayModel.swift */,
+				6923DED8247331B50079EE73 /* testModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -272,10 +284,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6923DED9247331B50079EE73 /* testModel.swift in Sources */,
 				691A47B824607AC700AA6655 /* DetailViewController.swift in Sources */,
 				698CD87D24606EA500E5CAEA /* ViewController.swift in Sources */,
 				691A47B4246076A900AA6655 /* Secrets.swift in Sources */,
+				69318644246F8C8B00C10A2C /* PiixaRequest.swift in Sources */,
+				69318640246F5EE900C10A2C /* URLRequest.swift in Sources */,
 				691A47BA2460850500AA6655 /* Extension.swift in Sources */,
+				69318642246F5F1000C10A2C /* PixaBayModel.swift in Sources */,
 				698CD87924606EA500E5CAEA /* AppDelegate.swift in Sources */,
 				691A47AC246075A700AA6655 /* PixaBayPictureAPIClient.swift in Sources */,
 				698CD87B24606EA500E5CAEA /* SceneDelegate.swift in Sources */,

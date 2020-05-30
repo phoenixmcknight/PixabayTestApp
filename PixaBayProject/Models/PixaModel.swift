@@ -3,9 +3,14 @@
 import Foundation
 import UIKit
 // MARK: - Picture
+
 struct Picture: Codable {
 
     let hits: [Hit]
+    
+    
+
+    
 }
 
 // MARK: - Hit

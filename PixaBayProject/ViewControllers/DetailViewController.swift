@@ -29,6 +29,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         detailLabel.adjustsFontSizeToFitWidth = true
+        TestModel.testNumber! += 10
+        print(TestModel.testNumber)
         // Do any additional setup after loading the view.
     }
     
